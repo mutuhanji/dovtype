@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>短劇心得歸類總表</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --primary-soft: #eef2ff;
+      --border: #e5e7eb;
+      --danger: #dc2626;
+      --danger-soft: #fef2f2;
+      --success: #059669;
+      --success-soft: #ecfdf5;
+      --star: #f59e0b;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 16px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      padding: 9px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+
+    button:hover {
+      background: #f9fafb;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-success {
+      background: var(--success-soft);
+      border-color: #a7f3d0;
+      color: var(--success);
+    }
+
+    .btn-danger-soft {
+      background: var(--danger-soft);
+      border-color: #fecaca;
+      color: var(--danger);
+      padding: 5px 10px;
+      font-size: 0.8rem;
+    }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    @media (min-width: 960px) {
+      .grid-main {
+        grid-template-columns: 430px 1fr;
+        align-items: start;
+      }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+    }
+
+    .card-title {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label.question-label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .req {
+      color: var(--danger);
+      margin-left: 2px;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font: inherit;
+      font-size: 0.95rem;
+      background: #fff;
+      color: var(--text);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 74px;
+    }
+
+    input[type="text"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .tags-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      font-size: 0.86rem;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.12s ease;
+    }
+
+    .tag-chip input {
+      display: none;
+    }
+
+    .tag-chip.active {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .custom-tag-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .custom-tag-row input {
+      flex: 1;
+      padding: 8px 11px;
+      font-size: 0.88rem;
+    }
+
+    .custom-tag-row button {
+      padding: 8px 12px;
+      font-size: 0.88rem;
+      white-space: nowrap;
+    }
+
+    .conditional-box {
+      margin-top: 8px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px dashed #cbd5e1;
+      display: none;
+    }
+
+    .conditional-box.show {
+      display: block;
+    }
+
+    .star-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .star-btn {
+      border: none;
+      background: transparent;
+      padding: 2px 4px;
+      font-size: 1.55rem;
+      line-height: 1;
+      color: #d1d5db;
+      transition: transform 0.1s ease, color 0.1s ease;
+    }
+
+    .star-btn:hover {
+      background: transparent;
+      transform: scale(1.1);
+    }
+
+    .star-btn.filled {
+      color: var(--star);
+    }
+
+    .rating-text {
+      margin-left: 8px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .stars-display {
+      color: var(--star);
+      letter-spacing: 1px;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .stars-empty {
+      color: #d1d5db;
+    }
+
+    .note-cell {
+      max-width: 240px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .helper-text {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .submit-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .submit-row button[type="submit"] {
+      flex: 1;
+      padding: 11px 16px;
+      font-size: 0.98rem;
+    }
+
+    .summary-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .search-input {
+      max-width: 260px;
+      padding: 8px 12px !important;
+      font-size: 0.88rem !important;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      min-width: 960px;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 700;
+      color: #374151;
+      white-space: nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin: 1px 3px 1px 0;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 36px 16px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111827;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      z-index: 999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>短劇心得歸類總表</h1>
+        <p class="subtitle">快速填寫問卷與星等簡評、自動累積總表，並支援匯出 CSV</p>
+      </div>
+      <div class="toolbar">
+        <button type="button" class="btn-success" id="exportCsvBtn">匯出 CSV</button>
+        <button type="button" id="exportJsonBtn">備份 JSON</button>
+        <button type="button" id="importJsonBtn">還原 JSON</button>
+        <input type="file" id="importJsonInput" accept=".json,application/json" style="display:none" />
+      </div>
+    </header>
+
+    <div class="grid-main">
+      <!-- 左側：問卷表單 -->
+      <section class="card" aria-label="短劇心得問卷">
+        <h2 class="card-title">
+          <span>新增短劇紀錄</span>
+          <span style="font-size:0.8rem;font-weight:500;color:var(--muted)" id="knownCounts">已存 0 部劇名・0 本小說</span>
+        </h2>
+
+        <form id="dramaForm">
+          <!-- 1. 劇名 -->
+          <div class="form-group">
+            <label class="question-label" for="dramaTitle">1、劇名<span class="req">*</span></label>
+            <input type="text" id="dramaTitle" name="dramaTitle" placeholder="例如：重生後我成了大佬白月光" required />
+          </div>
+
+          <!-- 2. 男主角 / 女主角 -->
+          <div class="form-group">
+            <label class="question-label">2、男主角與女主角</label>
+            <div class="two-col">
+              <div>
+                <input type="text" id="maleLead" name="maleLead" placeholder="男主角" />
+              </div>
+              <div>
+                <input type="text" id="femaleLead" name="femaleLead" placeholder="女主角" />
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. 歸類（可複選＋新增自訂標籤） -->
+          <div class="form-group">
+            <label class="question-label">3、歸類（可複選）</label>
+            <div class="tags-wrap" id="genreTagsContainer"></div>
+            <div class="custom-tag-row">
+              <input type="text" id="newGenreInput" placeholder="新增其他歸類標籤（如：先婚後愛）" />
+              <button type="button" id="addGenreBtn">+ 加入</button>
+            </div>
+          </div>
+
+          <!-- 4. 建模是不是有重複？ -->
+          <div class="form-group">
+            <label class="question-label" for="modelRepeat">4、建模是不是有重複？</label>
+            <select id="modelRepeat" name="modelRepeat">
+              <option value="否">否</option>
+              <option value="是">是</option>
+            </select>
+
+            <div class="conditional-box" id="modelRepeatBox">
+              <label class="question-label" for="previousDramaSelect" style="font-size:0.88rem;margin-bottom:4px;">
+                回選之前填過的劇名
+              </label>
+              <select id="previousDramaSelect">
+                <option value="">-- 請選擇曾填過的劇名 --</option>
+              </select>
+              <div style="margin-top:8px;">
+                <input type="text" id="customRepeatDrama" placeholder="若清單沒有，也可直接輸入劇名" />
+              </div>
+              <div class="helper-text">送出紀錄後，這部劇名也會自動加入可回選的劇名清單。</div>
+            </div>
+          </div>
+
+          <!-- 5. 是不是重複看的劇本？ -->
+          <div class="form-group">
+            <label class="question-label" for="scriptRepeat">5、是不是重複看的劇本？</label>
+            <select id="scriptRepeat" name="scriptRepeat">
+              <option value="否">否</option>
+              <option value="是">是</option>
+            </select>
+
+            <div class="conditional-box" id="scriptRepeatBox">
+              <label class="question-label" for="previousNovelSelect" style="font-size:0.88rem;margin-bottom:4px;">
+                回選之前填過的小說名
+              </label>
+              <select id="previousNovelSelect">
+                <option value="">-- 請選擇曾填過的小說名 --</option>
+              </select>
+              <div style="margin-top:8px;">
+                <input type="text" id="novelName" name="novelName" placeholder="若清單沒有，也可直接新增小說名" />
+              </div>
+              <div class="helper-text">送出紀錄後，若為新小說名會自動加入可回選的小說清單。</div>
+            </div>
+          </div>
+
+          <!-- 6. 評分（1～5星） -->
+          <div class="form-group">
+            <label class="question-label">6、評分（1～5 星）</label>
+            <div class="star-rating" id="starRatingContainer" role="group" aria-label="1到5星評分">
+              <button type="button" class="star-btn" data-value="1" aria-label="1 星">★</button>
+              <button type="button" class="star-btn" data-value="2" aria-label="2 星">★</button>
+              <button type="button" class="star-btn" data-value="3" aria-label="3 星">★</button>
+              <button type="button" class="star-btn" data-value="4" aria-label="4 星">★</button>
+              <button type="button" class="star-btn" data-value="5" aria-label="5 星">★</button>
+              <span class="rating-text" id="ratingText">未評分（點選星星可再按一次取消）</span>
+            </div>
+          </div>
+
+          <!-- 7. 簡評／備註 -->
+          <div class="form-group">
+            <label class="question-label" for="reviewNote">7、簡評／備註</label>
+            <textarea id="reviewNote" name="reviewNote" placeholder="寫下劇情亮點、CP 感、節奏或想記下的備註..."></textarea>
+          </div>
+
+          <div class="submit-row">
+            <button type="submit" class="btn-primary">加入總表</button>
+            <button type="button" id="resetFormBtn">清空</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 右側：即時總表 -->
+      <section class="card" aria-label="短劇心得總表">
+        <div class="summary-bar">
+          <h2 class="card-title" style="margin:0;">
+            <span>心得總表（<span id="recordCount">0</span> 筆）</span>
+          </h2>
+          <input type="text" id="searchInput" class="search-input" placeholder="搜尋劇名、演員、歸類、簡評..." />
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>1. 劇名</th>
+                <th>2. 男主 / 女主</th>
+                <th>3. 歸類</th>
+                <th>4. 建模重複</th>
+                <th>5. 重複劇本 / 小說名</th>
+                <th>6. 評分</th>
+                <th>7. 簡評／備註</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+        <div id="emptyState" class="empty-state" style="display:none;">
+          目前還沒有短劇紀錄，請在左側填寫問卷並按下「加入總表」。
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORAGE_KEY_RECORDS = "short_drama_records_v1";
+    const STORAGE_KEY_GENRES = "short_drama_genres_v1";
+    const DEFAULT_GENRES = [
+      "甜寵",
+      "穿越",
+      "系統",
+      "古代",
+      "鬼神",
+      "死後重生",
+      "先虐後愛",
+      "全程甜度爆表"
+    ];
+
+    let records = loadJSON(STORAGE_KEY_RECORDS, []);
+    let genres = loadJSON(STORAGE_KEY_GENRES, DEFAULT_GENRES);
+    let currentRating = 0;
+
+    const els = {
+      form: document.getElementById("dramaForm"),
+      dramaTitle: document.getElementById("dramaTitle"),
+      maleLead: document.getElementById("maleLead"),
+      femaleLead: document.getElementById("femaleLead"),
+      genreTagsContainer: document.getElementById("genreTagsContainer"),
+      newGenreInput: document.getElementById("newGenreInput"),
+      addGenreBtn: document.getElementById("addGenreBtn"),
+      modelRepeat: document.getElementById("modelRepeat"),
+      modelRepeatBox: document.getElementById("modelRepeatBox"),
+      previousDramaSelect: document.getElementById("previousDramaSelect"),
+      customRepeatDrama: document.getElementById("customRepeatDrama"),
+      scriptRepeat: document.getElementById("scriptRepeat"),
+      scriptRepeatBox: document.getElementById("scriptRepeatBox"),
+      previousNovelSelect: document.getElementById("previousNovelSelect"),
+      novelName: document.getElementById("novelName"),
+      starBtns: Array.from(document.querySelectorAll("#starRatingContainer .star-btn")),
+      ratingText: document.getElementById("ratingText"),
+      reviewNote: document.getElementById("reviewNote"),
+      resetFormBtn: document.getElementById("resetFormBtn"),
+      tableBody: document.getElementById("tableBody"),
+      emptyState: document.getElementById("emptyState"),
+      recordCount: document.getElementById("recordCount"),
+      knownCounts: document.getElementById("knownCounts"),
+      searchInput: document.getElementById("searchInput"),
+      exportCsvBtn: document.getElementById("exportCsvBtn"),
+      exportJsonBtn: document.getElementById("exportJsonBtn"),
+      importJsonBtn: document.getElementById("importJsonBtn"),
+      importJsonInput: document.getElementById("importJsonInput"),
+      toast: document.getElementById("toast")
+    };
+
+    function loadJSON(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function saveAll() {
+      localStorage.setItem(STORAGE_KEY_RECORDS, JSON.stringify(records));
+      localStorage.setItem(STORAGE_KEY_GENRES, JSON.stringify(genres));
+    }
+
+    function showToast(msg) {
+      els.toast.textContent = msg;
+      els.toast.classList.add("show");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => {
+        els.toast.classList.remove("show");
+      }, 2200);
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function renderStarSelector(value) {
+      els.starBtns.forEach((btn) => {
+        const v = Number(btn.dataset.value);
+        btn.classList.toggle("filled", v <= value);
+      });
+      els.ratingText.textContent = value > 0
+        ? `${value} / 5 星`
+        : "未評分（點選星星可再按一次取消）";
+    }
+
+    function formatRatingDisplay(rating) {
+      const n = Number(rating) || 0;
+      if (n <= 0) {
+        return `<span style="color:var(--muted)">—</span>`;
+      }
+      const filled = "★".repeat(n);
+      const empty = "★".repeat(5 - n);
+      return `<span class="stars-display" title="${n} 星">${filled}<span class="stars-empty">${empty}</span></span>`;
+    }
+
+    function getKnownDramas() {
+      const set = new Set();
+      records.forEach((r) => {
+        if (r.dramaTitle && r.dramaTitle.trim()) set.add(r.dramaTitle.trim());
+        if (r.repeatModelDrama && r.repeatModelDrama.trim()) set.add(r.repeatModelDrama.trim());
+      });
+      return Array.from(set);
+    }
+
+    function getKnownNovels() {
+      const set = new Set();
+      records.forEach((r) => {
+        if (r.novelName && r.novelName.trim()) set.add(r.novelName.trim());
+      });
+      return Array.from(set);
+    }
+
+    function renderGenreTags(selectedSet = new Set()) {
+      els.genreTagsContainer.innerHTML = "";
+      genres.forEach((genre) => {
+        const label = document.createElement("label");
+        const isChecked = selectedSet.has(genre);
+        label.className = `tag-chip${isChecked ? " active" : ""}`;
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = genre;
+        checkbox.checked = isChecked;
+
+        checkbox.addEventListener("change", () => {
+          label.classList.toggle("active", checkbox.checked);
+        });
+
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(genre));
+        els.genreTagsContainer.appendChild(label);
+      });
+    }
+
+    function getSelectedGenres() {
+      return Array.from(els.genreTagsContainer.querySelectorAll('input[type="checkbox"]:checked')).map(
+        (cb) => cb.value
+      );
+    }
+
+    function refreshHistoryOptions() {
+      const knownDramas = getKnownDramas();
+      const knownNovels = getKnownNovels();
+
+      els.knownCounts.textContent = `已存 ${knownDramas.length} 部劇名・${knownNovels.length} 本小說`;
+
+      els.previousDramaSelect.innerHTML = '<option value="">-- 請選擇曾填過的劇名 --</option>';
+      knownDramas.forEach((title) => {
+        const opt = document.createElement("option");
+        opt.value = title;
+        opt
