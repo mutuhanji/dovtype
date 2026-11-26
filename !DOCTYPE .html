@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <title>短劇心得歸類總表</title>
   <style>
     :root {
@@ -26,44 +26,49 @@
       box-sizing: border-box;
     }
 
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
-      padding: 16px;
+      padding: 12px;
+      overflow-x: hidden;
     }
 
     .container {
+      width: 100%;
       max-width: 1200px;
       margin: 0 auto;
     }
 
     header {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 18px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
     h1 {
       margin: 0;
-      font-size: 1.45rem;
+      font-size: 1.3rem;
       font-weight: 700;
     }
 
     .subtitle {
-      margin: 4px 0 0;
-      font-size: 0.9rem;
+      margin: 3px 0 0;
+      font-size: 0.85rem;
       color: var(--muted);
     }
 
     .toolbar {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
     }
 
@@ -74,10 +79,11 @@
       border: 1px solid var(--border);
       background: var(--card);
       color: var(--text);
-      padding: 9px 14px;
-      font-size: 0.9rem;
+      padding: 9px 10px;
+      font-size: 0.86rem;
       font-weight: 600;
       transition: all 0.15s ease;
+      touch-action: manipulation;
     }
 
     button:hover {
@@ -104,48 +110,44 @@
       background: var(--danger-soft);
       border-color: #fecaca;
       color: var(--danger);
-      padding: 5px 10px;
+      padding: 6px 10px;
       font-size: 0.8rem;
     }
 
     .grid-main {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    @media (min-width: 960px) {
-      .grid-main {
-        grid-template-columns: 430px 1fr;
-        align-items: start;
-      }
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
     }
 
     .card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 18px;
+      padding: 14px;
       box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+      min-width: 0;
     }
 
     .card-title {
-      margin: 0 0 14px;
-      font-size: 1.1rem;
+      margin: 0 0 12px;
+      font-size: 1.05rem;
       font-weight: 700;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
+      gap: 6px;
     }
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 14px;
     }
 
     label.question-label {
       display: block;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       margin-bottom: 6px;
     }
 
@@ -154,6 +156,7 @@
       margin-left: 2px;
     }
 
+    /* 手機版 font-size 至少 16px 可避免 iOS 點擊輸入框時自動放大畫面 */
     input[type="text"],
     select,
     textarea {
@@ -162,14 +165,14 @@
       border: 1px solid #d1d5db;
       border-radius: 10px;
       font: inherit;
-      font-size: 0.95rem;
+      font-size: 16px;
       background: #fff;
       color: var(--text);
     }
 
     textarea {
       resize: vertical;
-      min-height: 74px;
+      min-height: 76px;
     }
 
     input[type="text"]:focus,
@@ -182,14 +185,14 @@
 
     .two-col {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      grid-template-columns: 1fr;
+      gap: 8px;
     }
 
     .tags-wrap {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 7px;
       margin-bottom: 8px;
     }
 
@@ -225,13 +228,12 @@
 
     .custom-tag-row input {
       flex: 1;
+      min-width: 0;
       padding: 8px 11px;
-      font-size: 0.88rem;
     }
 
     .custom-tag-row button {
       padding: 8px 12px;
-      font-size: 0.88rem;
       white-space: nowrap;
     }
 
@@ -249,16 +251,17 @@
     }
 
     .star-rating {
-      display: inline-flex;
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 4px;
+      gap: 2px;
     }
 
     .star-btn {
       border: none;
       background: transparent;
       padding: 2px 4px;
-      font-size: 1.55rem;
+      font-size: 1.65rem;
       line-height: 1;
       color: #d1d5db;
       transition: transform 0.1s ease, color 0.1s ease;
@@ -266,7 +269,7 @@
 
     .star-btn:hover {
       background: transparent;
-      transform: scale(1.1);
+      transform: scale(1.08);
     }
 
     .star-btn.filled {
@@ -274,8 +277,9 @@
     }
 
     .rating-text {
-      margin-left: 8px;
-      font-size: 0.86rem;
+      width: 100%;
+      margin-top: 4px;
+      font-size: 0.82rem;
       color: var(--muted);
       font-weight: 500;
     }
@@ -283,7 +287,7 @@
     .stars-display {
       color: var(--star);
       letter-spacing: 1px;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       white-space: nowrap;
     }
 
@@ -292,7 +296,7 @@
     }
 
     .note-cell {
-      max-width: 240px;
+      max-width: 220px;
       white-space: pre-wrap;
       word-break: break-word;
     }
@@ -306,32 +310,32 @@
     .submit-row {
       display: flex;
       gap: 10px;
-      margin-top: 18px;
+      margin-top: 16px;
     }
 
     .submit-row button[type="submit"] {
       flex: 1;
-      padding: 11px 16px;
+      padding: 12px 16px;
       font-size: 0.98rem;
     }
 
     .summary-bar {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
       margin-bottom: 12px;
     }
 
     .search-input {
-      max-width: 260px;
-      padding: 8px 12px !important;
-      font-size: 0.88rem !important;
+      width: 100%;
+      padding: 9px 12px !important;
     }
 
     .table-wrap {
+      width: 100%;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       border: 1px solid var(--border);
       border-radius: 12px;
     }
@@ -339,13 +343,13 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.88rem;
-      min-width: 960px;
+      font-size: 0.86rem;
+      min-width: 760px;
     }
 
     th,
     td {
-      padding: 10px 12px;
+      padding: 9px 10px;
       text-align: left;
       border-bottom: 1px solid var(--border);
       vertical-align: top;
@@ -368,16 +372,16 @@
       color: var(--primary);
       padding: 2px 8px;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
       margin: 1px 3px 1px 0;
     }
 
     .empty-state {
       text-align: center;
-      padding: 36px 16px;
+      padding: 28px 14px;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
     }
 
     .toast {
@@ -389,16 +393,83 @@
       color: #fff;
       padding: 10px 18px;
       border-radius: 999px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       opacity: 0;
       pointer-events: none;
       transition: all 0.2s ease;
       z-index: 999;
+      max-width: 90vw;
+      text-align: center;
     }
 
     .toast.show {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
+    }
+
+    /* 平板與電腦螢幕加強版面 */
+    @media (min-width: 640px) {
+      body {
+        padding: 16px;
+      }
+
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        font-size: 1.45rem;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .star-rating {
+        flex-wrap: nowrap;
+      }
+
+      .rating-text {
+        width: auto;
+        margin-top: 0;
+        margin-left: 8px;
+        font-size: 0.86rem;
+      }
+
+      .summary-bar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .search-input {
+        max-width: 260px;
+      }
+    }
+
+    @media (min-width: 960px) {
+      .grid-main {
+        grid-template-columns: 430px minmax(0, 1fr);
+        align-items: start;
+        gap: 18px;
+      }
+
+      table {
+        min-width: 960px;
+      }
     }
   </style>
 </head>
@@ -718,4 +789,325 @@
       knownDramas.forEach((title) => {
         const opt = document.createElement("option");
         opt.value = title;
-        opt
+        opt.textContent = title;
+        els.previousDramaSelect.appendChild(opt);
+      });
+
+      els.previousNovelSelect.innerHTML = '<option value="">-- 請選擇曾填過的小說名 --</option>';
+      knownNovels.forEach((novel) => {
+        const opt = document.createElement("option");
+        opt.value = novel;
+        opt.textContent = novel;
+        els.previousNovelSelect.appendChild(opt);
+      });
+    }
+
+    function syncConditionalBoxes() {
+      const isModelDup = els.modelRepeat.value === "是";
+      els.modelRepeatBox.classList.toggle("show", isModelDup);
+
+      const isScriptDup = els.scriptRepeat.value === "是";
+      els.scriptRepeatBox.classList.toggle("show", isScriptDup);
+
+      if (isModelDup || isScriptDup) {
+        refreshHistoryOptions();
+      }
+    }
+
+    function renderTable() {
+      const keyword = els.searchInput.value.trim().toLowerCase();
+      const filtered = records.filter((item) => {
+        if (!keyword) return true;
+        const hay = [
+          item.dramaTitle,
+          item.maleLead,
+          item.femaleLead,
+          (item.genres || []).join(" "),
+          item.modelRepeat,
+          item.repeatModelDrama,
+          item.scriptRepeat,
+          item.novelName,
+          item.rating ? `${item.rating}星` : "",
+          item.reviewNote
+        ]
+          .join(" ")
+          .toLowerCase();
+        return hay.includes(keyword);
+      });
+
+      els.recordCount.textContent = filtered.length;
+      els.tableBody.innerHTML = "";
+
+      if (filtered.length === 0) {
+        els.emptyState.style.display = "block";
+        els.emptyState.textContent = records.length === 0
+          ? "目前還沒有短劇紀錄，請在左側填寫問卷並按下「加入總表」。"
+          : "找不到符合搜尋條件的紀錄。";
+        return;
+      }
+
+      els.emptyState.style.display = "none";
+
+      filtered.forEach((item, idx) => {
+        const tr = document.createElement("tr");
+
+        const genreBadges = (item.genres && item.genres.length > 0)
+          ? item.genres.map((g) => `<span class="badge">${escapeHtml(g)}</span>`).join("")
+          : `<span style="color:var(--muted)">未歸類</span>`;
+
+        const actors = [item.maleLead, item.femaleLead].filter(Boolean).join(" ／ ") || "—";
+
+        let modelText = "否";
+        if (item.modelRepeat === "是") {
+          modelText = item.repeatModelDrama
+            ? `<strong>是</strong>（${escapeHtml(item.repeatModelDrama)}）`
+            : "<strong>是</strong>";
+        }
+
+        let scriptText = "否";
+        if (item.scriptRepeat === "是") {
+          scriptText = item.novelName
+            ? `<strong>是</strong>｜小說：${escapeHtml(item.novelName)}`
+            : "<strong>是</strong>";
+        }
+
+        const noteHtml = item.reviewNote && item.reviewNote.trim()
+          ? `<div class="note-cell">${escapeHtml(item.reviewNote)}</div>`
+          : `<span style="color:var(--muted)">—</span>`;
+
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td><strong>${escapeHtml(item.dramaTitle)}</strong></td>
+          <td>${escapeHtml(actors)}</td>
+          <td>${genreBadges}</td>
+          <td>${modelText}</td>
+          <td>${scriptText}</td>
+          <td>${formatRatingDisplay(item.rating)}</td>
+          <td>${noteHtml}</td>
+          <td>
+            <button type="button" class="btn-danger-soft" data-id="${escapeHtml(item.id)}">刪除</button>
+          </td>
+        `;
+
+        tr.querySelector(".btn-danger-soft").addEventListener("click", () => {
+          records = records.filter((r) => r.id !== item.id);
+          saveAll();
+          renderTable();
+          refreshHistoryOptions();
+          showToast("已刪除該筆紀錄");
+        });
+
+        els.tableBody.appendChild(tr);
+      });
+    }
+
+    function resetForm() {
+      els.form.reset();
+      currentRating = 0;
+      renderStarSelector(currentRating);
+      renderGenreTags(new Set());
+      syncConditionalBoxes();
+    }
+
+    function exportCSV() {
+      if (records.length === 0) {
+        showToast("目前沒有資料可匯出 CSV");
+        return;
+      }
+
+      const headers = [
+        "序號",
+        "1. 劇名",
+        "2. 男主角",
+        "2. 女主角",
+        "3. 歸類",
+        "4. 建模是否重複",
+        "4. 重複建模劇名",
+        "5. 是否重複劇本",
+        "5. 小說名",
+        "6. 評分（1～5星）",
+        "7. 簡評／備註"
+      ];
+
+      const escapeCsv = (val) => {
+        const s = String(val ?? "").replace(/"/g, '""');
+        return `"${s}"`;
+      };
+
+      const rows = records.map((r, i) => [
+        i + 1,
+        r.dramaTitle || "",
+        r.maleLead || "",
+        r.femaleLead || "",
+        (r.genres || []).join("、"),
+        r.modelRepeat || "否",
+        r.modelRepeat === "是" ? (r.repeatModelDrama || "") : "",
+        r.scriptRepeat || "否",
+        r.scriptRepeat === "是" ? (r.novelName || "") : "",
+        r.rating ? `${r.rating}星` : "",
+        r.reviewNote || ""
+      ]);
+
+      const csvContent = [headers, ...rows]
+        .map((row) => row.map(escapeCsv).join(","))
+        .join("\r\n");
+
+      const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const dateStr = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `短劇心得總表_${dateStr}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("已匯出 CSV 檔案");
+    }
+
+    function exportJSON() {
+      const payload = JSON.stringify({ records, genres }, null, 2);
+      const blob = new Blob([payload], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const dateStr = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `短劇心得備份_${dateStr}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("已下載 JSON 備份");
+    }
+
+    function handleImportJSON(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (Array.isArray(parsed.records)) {
+            records = parsed.records;
+          }
+          if (Array.isArray(parsed.genres)) {
+            genres = Array.from(new Set([...DEFAULT_GENRES, ...parsed.genres]));
+          }
+          saveAll();
+          renderGenreTags(getSelectedGenresSet());
+          refreshHistoryOptions();
+          renderTable();
+          showToast("已還原備份資料");
+        } catch {
+          showToast("JSON 格式不正確，無法還原");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function getSelectedGenresSet() {
+      return new Set(getSelectedGenres());
+    }
+
+    // 星等點選事件
+    els.starBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const clickedVal = Number(btn.dataset.value);
+        currentRating = currentRating === clickedVal ? 0 : clickedVal;
+        renderStarSelector(currentRating);
+      });
+    });
+
+    // 事件綁定
+    els.addGenreBtn.addEventListener("click", () => {
+      const val = els.newGenreInput.value.trim();
+      if (!val) return;
+      const currentSelected = getSelectedGenresSet();
+      currentSelected.add(val);
+      if (!genres.includes(val)) {
+        genres.push(val);
+        saveAll();
+      }
+      els.newGenreInput.value = "";
+      renderGenreTags(currentSelected);
+      showToast(`已加入歸類：${val}`);
+    });
+
+    els.newGenreInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        els.addGenreBtn.click();
+      }
+    });
+
+    els.modelRepeat.addEventListener("change", syncConditionalBoxes);
+    els.scriptRepeat.addEventListener("change", syncConditionalBoxes);
+
+    els.previousDramaSelect.addEventListener("change", () => {
+      if (els.previousDramaSelect.value) {
+        els.customRepeatDrama.value = els.previousDramaSelect.value;
+      }
+    });
+
+    els.previousNovelSelect.addEventListener("change", () => {
+      if (els.previousNovelSelect.value) {
+        els.novelName.value = els.previousNovelSelect.value;
+      }
+    });
+
+    els.form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const dramaTitle = els.dramaTitle.value.trim();
+      if (!dramaTitle) return;
+
+      const modelRepeat = els.modelRepeat.value;
+      const repeatModelDrama = modelRepeat === "是"
+        ? (els.customRepeatDrama.value.trim() || els.previousDramaSelect.value.trim())
+        : "";
+
+      const scriptRepeat = els.scriptRepeat.value;
+      const novelName = scriptRepeat === "是"
+        ? (els.novelName.value.trim() || els.previousNovelSelect.value.trim())
+        : "";
+
+      const newRecord = {
+        id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+        dramaTitle,
+        maleLead: els.maleLead.value.trim(),
+        femaleLead: els.femaleLead.value.trim(),
+        genres: getSelectedGenres(),
+        modelRepeat,
+        repeatModelDrama,
+        scriptRepeat,
+        novelName,
+        rating: currentRating,
+        reviewNote: els.reviewNote.value.trim()
+      };
+
+      records.unshift(newRecord);
+      saveAll();
+      resetForm();
+      refreshHistoryOptions();
+      renderTable();
+      showToast(`已加入「${dramaTitle}」`);
+    });
+
+    els.resetFormBtn.addEventListener("click", resetForm);
+    els.searchInput.addEventListener("input", renderTable);
+    els.exportCsvBtn.addEventListener("click", exportCSV);
+    els.exportJsonBtn.addEventListener("click", exportJSON);
+    els.importJsonBtn.addEventListener("click", () => els.importJsonInput.click());
+    els.importJsonInput.addEventListener("change", (e) => {
+      if (e.target.files && e.target.files[0]) {
+        handleImportJSON(e.target.files[0]);
+        e.target.value = "";
+      }
+    });
+
+    // 初始化
+    renderStarSelector(currentRating);
+    renderGenreTags();
+    refreshHistoryOptions();
+    syncConditionalBoxes();
+    renderTable();
+  </script>
+</body>
+</html>
